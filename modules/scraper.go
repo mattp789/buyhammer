@@ -83,5 +83,5 @@ func Csviterate(){
 		prices = append(prices, scrape(v[0]))
 		
 	}
-	fmt.Println(sumWithForLoop(prices))
+	fmt.Printf("$%.2f\n", sumWithForLoop(prices))
 }
