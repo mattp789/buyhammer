@@ -1,8 +1,11 @@
 package main
 
-import "buyhammer/modules"
+import (
+    "buyhammer/modules"
+)
+
 
 
 func main() {
-    modules.Scrape()
+    modules.Csviterate()
 }
