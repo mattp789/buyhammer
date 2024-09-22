@@ -5,11 +5,8 @@ import (
 	"log"
 	"strings"
 	"github.com/chromedp/chromedp"
-	"os"
-	"fmt"
-	"encoding/csv"
-	"io"
 	"strconv"
+	"fmt"
 )
 func sumWithForLoop(numbers []float64) float64 {
     sum := 0.00
@@ -46,42 +43,17 @@ func scrape(unit string) float64 {
 	return pricefloat
 }
 
-func Csviterate(){
-	file, err := os.Open("units.csv")
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return
-	}
-	defer file.Close()
+func Csviterate(data []string) string{
 
-
-	reader := csv.NewReader(file)
-
-	lineNumber := 0
-
-	records := make ([][]string, 0)
 	prices := []float64{}
 
-	for {
-		record, err := reader.Read()
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-			log.Fatalf("err while reading CSV file: %s", err)
-		}
-		lineNumber++
 
-		records = append(records,record)
-	}
-
-	for _, v := range records {
-		if len(v) != 1 {
-			// malformation of file ignore record
-			continue
-		}
-		prices = append(prices, scrape(v[0]))
+	for _, v := range data {
+		prices = append(prices, scrape(v))
 		
 	}
-	fmt.Printf("$%.2f\n", sumWithForLoop(prices))
+	dollarValue := fmt.Sprintf("$%.2f", sumWithForLoop(prices))
+
+	return dollarValue
+
 }
