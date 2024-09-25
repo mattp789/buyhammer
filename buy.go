@@ -5,7 +5,6 @@ import (
 	"buyhammer/modules"
 	"log"
 	"net/http"
-
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
@@ -26,6 +25,7 @@ func main() {
     r.POST("/calculate", func(c *gin.Context) {
         var json struct {
             DataItems []string `json:"dataitems"`
+            Multiplier float64`json:"multiplier"` 
         }
 
         if err := c.ShouldBindJSON(&json); err != nil {
@@ -33,7 +33,7 @@ func main() {
             c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
             return
         }
-         var response string = modules.Csviterate(json.DataItems)
+         var response string = modules.Csviterate(json.DataItems, json.Multiplier)
         c.JSON(http.StatusOK, gin.H{"message": response})
     })
 

@@ -43,7 +43,7 @@ func scrape(unit string) float64 {
 	return pricefloat
 }
 
-func Csviterate(data []string) string{
+func Csviterate(data []string, multiplier float64) string{
 
 	prices := []float64{}
 
@@ -52,7 +52,9 @@ func Csviterate(data []string) string{
 		prices = append(prices, scrape(v))
 		
 	}
-	dollarValue := fmt.Sprintf("$%.2f", sumWithForLoop(prices))
+	dollarfloat := sumWithForLoop(prices) * (multiplier * .01)
+
+	dollarValue := fmt.Sprintf("$%.2f", dollarfloat)
 
 	return dollarValue
 
