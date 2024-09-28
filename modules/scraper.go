@@ -29,12 +29,12 @@ func scrape(unit string) float64 {
 
 	// Replace spaces in the unit string with dashes to format the URL
 	unitbar := strings.ReplaceAll(unit, " ", "-")
-
+	unitescape := strings.ReplaceAll(unit, " ", "\\ ")
 	// Check if the price is already in the cache
 	if cachedPrice, found := priceCache.Get(unitbar); found {
 		// If found in the cache, return the cached price
 		return cachedPrice.(float64)
-	}q
+	}
 
 	// Create a new ChromeDP context
 	ctx, cancel := chromedp.NewContext(
@@ -47,7 +47,7 @@ func scrape(unit string) float64 {
 	err := chromedp.Run(ctx,
 		chromedp.Navigate("https://www.warhammer.com/en-US/plp?search="+unitbar),
 		chromedp.Poll("document.querySelector('[data-testid=product-cards-container]')?.childElementCount > 0 && parseInt(document.querySelector('[data-testid=results-count]')?.innerHTML) < 3500", nil),
-		chromedp.InnerHTML("[data-testid=product-card-current-price]", &price, chromedp.NodeVisible),
+		chromedp.Text(`div[data-testid="product-card-`+unitescape+`"] [data-testid="product-card-current-price"]`, &price, chromedp.ByQuery),
 		chromedp.ActionFunc(func(ctx context.Context) error {
 			return nil
 		}),
