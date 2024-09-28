@@ -12,8 +12,8 @@ import (
 	"istio.io/pkg/cache"
 )
 
-// Create a global cache instance with a TTL of 1 hour
-var priceCache = cache.NewTTL(time.Hour, time.Minute)
+// Create a global cache instance with a TTL of 1 Month
+var priceCache = cache.NewTTL(time.Hour*730, time.Minute)
 
 // sumWithForLoop sums up the elements in a float64 slice.
 func sumWithForLoop(numbers []float64) float64 {
