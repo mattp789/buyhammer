@@ -13,7 +13,7 @@ import (
 )
 
 // Create a global cache instance with a TTL of 1 Month
-var priceCache = cache.NewTTL(time.Hour*730, time.Minute)
+var priceCache = cache.NewTTL(time.Hour*24*30, time.Minute)
 
 // sumWithForLoop sums up the elements in a float64 slice.
 func sumWithForLoop(numbers []float64) float64 {
@@ -34,7 +34,7 @@ func scrape(unit string) float64 {
 	if cachedPrice, found := priceCache.Get(unitbar); found {
 		// If found in the cache, return the cached price
 		return cachedPrice.(float64)
-	}
+	}q
 
 	// Create a new ChromeDP context
 	ctx, cancel := chromedp.NewContext(
